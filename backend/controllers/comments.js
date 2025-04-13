@@ -1,4 +1,13 @@
 import db from "../prisma/prisma.js";
+import { body, validationResult } from "express-validator";
+
+const validateComment = [
+  body("email").trim().isEmail().withMessage("Not a valid email"),
+  body("comment")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Comment should not be empty!"),
+];
 
 export async function getComments(req, res) {
   const { postId } = req.params;
@@ -32,28 +41,31 @@ export async function getCommentsAdmin(req, res) {
   }
 }
 
-export async function createComment(req, res) {
-  const { postId } = req.params;
-  const { email, comment } = req.body;
-  try {
-    const post = await db.post.findFirst({
-      where: { id: parseInt(postId), published: true },
-    });
-    if (!post) {
-      throw new Error("Post not found");
+export const createComment = [
+  validateComment,
+  async (req, res) => {
+    const { postId } = req.params;
+    const { email, comment } = req.body;
+    try {
+      const post = await db.post.findFirst({
+        where: { id: parseInt(postId), published: true },
+      });
+      if (!post) {
+        throw new Error("Post not found");
+      }
+      const resource = await db.comment.create({
+        data: { author: email, text: comment, postId: parseInt(postId) },
+      });
+      return res.status(201).json({
+        message: "Comment created successfully",
+        data: resource,
+      });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: err.message });
     }
-    const resource = await db.comment.create({
-      data: { author: email, text: comment, postId: parseInt(postId) },
-    });
-    return res.status(201).json({
-      message: "Comment created successfully",
-      data: resource,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: err.message });
-  }
-}
+  },
+];
 
 export async function createCommentAdmin(req, res) {
   const { postId } = req.params;

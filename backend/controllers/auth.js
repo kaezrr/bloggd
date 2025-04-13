@@ -36,6 +36,13 @@ export const logIn = async (req, res) => {
 };
 
 export async function signUp(req, res) {
+  const { key } = req.body;
+  if (key != process.env.ADMIN_KEY) {
+    return res
+      .status(401)
+      .json({ message: "Incorrect admin creation password" });
+  }
+
   try {
     const { email, name, password } = req.body;
     const user = await db.user.create({
