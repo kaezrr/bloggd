@@ -2,7 +2,10 @@ import db from "../prisma/prisma.js";
 import { body, validationResult } from "express-validator";
 
 const validateComment = [
-  body("email").trim().isEmail().withMessage("Not a valid email"),
+  body("author")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Author should not be empty!"),
   body("comment")
     .trim()
     .isLength({ min: 1 })
@@ -69,7 +72,7 @@ export const createComment = [
 
 export async function createCommentAdmin(req, res) {
   const { postId } = req.params;
-  const { email, comment } = req.body;
+  const { author, comment } = req.body;
   try {
     const post = await db.post.findFirst({
       where: { id: parseInt(postId) },
@@ -78,7 +81,7 @@ export async function createCommentAdmin(req, res) {
       throw new Error("Post not found");
     }
     const resource = await db.comment.create({
-      data: { author: email, text: comment, postId: parseInt(postId) },
+      data: { author, text: comment, postId: parseInt(postId) },
     });
     return res.status(201).json({
       message: "Comment created successfully",

@@ -1,10 +1,12 @@
 import "dotenv/config";
 import express, { urlencoded } from "express";
+import cors from "cors";
 import routes from "./routes/index.js";
 import "./controllers/passport.js";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 
