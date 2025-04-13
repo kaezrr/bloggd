@@ -1,5 +1,5 @@
-import post from "./post.js";
-import comment from "./comment.js";
+import post from "./posts.js";
+import comment from "./comments.js";
 import auth from "./auth.js";
 
 export default {
