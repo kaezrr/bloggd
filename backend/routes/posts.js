@@ -13,12 +13,12 @@ import {
 
 const post = Router();
 
+post.get("/all", checkUser, getPostsAdmin);
+post.get("/all/:postId", checkUser, viewPostAdmin);
+
 post.get("/", getPosts);
 post.get("/:postId", viewPost);
 post.put("/:postId/likes", increaseLikes);
-
-post.get("/all", checkUser, getPostsAdmin);
-post.get("/all/:postId", checkUser, viewPostAdmin);
 
 post.post("/", checkUser, createPost);
 post.put("/:postId", checkUser, updatePost);
