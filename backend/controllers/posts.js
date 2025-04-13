@@ -73,10 +73,10 @@ export async function viewPostAdmin(req, res) {
 }
 
 export async function createPost(req, res) {
-  const { title, text } = req.body;
+  const { title, text, published } = req.body;
   try {
     const post = await db.post.create({
-      data: { title, text, authorId: req.user.id },
+      data: { title, text, authorId: req.user.id, published },
     });
     res.status(201).json({
       message: "Post created successfully",
@@ -90,11 +90,11 @@ export async function createPost(req, res) {
 
 export async function updatePost(req, res) {
   const { postId } = req.params;
-  const { title, text } = req.body;
+  const { title, text, published } = req.body;
   try {
     const post = await db.post.update({
       where: { id: parseInt(postId) },
-      data: { title, text },
+      data: { title, text, published },
     });
     res.json({
       message: "Post updated successfully",
