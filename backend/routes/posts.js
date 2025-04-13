@@ -4,9 +4,11 @@ import {
   createPost,
   deletePost,
   getPosts,
+  getPostsAdmin,
   increaseLikes,
   updatePost,
   viewPost,
+  viewPostAdmin,
 } from "../controllers/posts.js";
 
 const post = Router();
@@ -14,6 +16,9 @@ const post = Router();
 post.get("/", getPosts);
 post.get("/:postId", viewPost);
 post.put("/:postId/likes", increaseLikes);
+
+post.get("/all", checkUser, getPostsAdmin);
+post.get("/all/:postId", checkUser, viewPostAdmin);
 
 post.post("/", checkUser, createPost);
 post.put("/:postId", checkUser, updatePost);

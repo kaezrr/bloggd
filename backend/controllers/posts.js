@@ -2,6 +2,21 @@ import db from "../prisma/prisma.js";
 
 export async function getPosts(req, res) {
   try {
+    const posts = await db.post.findMany({
+      where: { published: true },
+    });
+    res.json({
+      message: "Posts fetched successfully",
+      data: posts,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+}
+
+export async function getPostsAdmin(req, res) {
+  try {
     const posts = await db.post.findMany();
     res.json({
       message: "Posts fetched successfully",
@@ -14,6 +29,28 @@ export async function getPosts(req, res) {
 }
 
 export async function viewPost(req, res) {
+  const { postId } = req.params;
+  try {
+    const post = await db.post.findUnique({
+      where: { id: parseInt(postId), published: true },
+    });
+    if (!post) {
+      return res.status(404).json({
+        message: "Post doesn't exist",
+        data: null,
+      });
+    }
+    res.json({
+      message: "Post fetched successfully",
+      data: post,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+}
+
+export async function viewPostAdmin(req, res) {
   const { postId } = req.params;
   try {
     const post = await db.post.findUnique({
