@@ -1,9 +1,13 @@
 import "dotenv/config";
-import express from "express";
-import routes from "./routes";
+import express, { urlencoded } from "express";
+import routes from "./routes/index.js";
+import "./controllers/passport.js";
 
 const app = express();
 
+app.use(urlencoded({ extended: false }));
+
+app.use("/auth", routes.auth);
 app.use("/posts", routes.post);
 app.use("/posts/:postId/comments", routes.comment);
 
