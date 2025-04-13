@@ -14,6 +14,7 @@ export async function getPosts(req, res) {
   try {
     const posts = await db.post.findMany({
       where: { published: true },
+      orderBy: { createdAt: "desc" },
     });
     res.json({
       message: "Posts fetched successfully",
@@ -27,7 +28,9 @@ export async function getPosts(req, res) {
 
 export async function getPostsAdmin(req, res) {
   try {
-    const posts = await db.post.findMany();
+    const posts = await db.post.findMany({
+      orderBy: { createdAt: "desc" },
+    });
     res.json({
       message: "Posts fetched successfully",
       data: posts,

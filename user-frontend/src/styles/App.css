@@ -86,6 +86,10 @@ main {
   gap: 1em;
 }
 
+.post-container {
+  align-items: center;
+}
+
 a {
   color: white;
   transition-duration: 0.2s;
@@ -98,13 +102,40 @@ a:hover {
 }
 
 nav {
+  position: relative;
   display: flex;
   justify-content: center;
   width: 100%;
   border-bottom: 2px solid white;
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
 
-nav h1 {
-  margin: 0px;
+nav > a {
+  position: absolute;
+  right: 0;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+.post-text {
+  font-size: 1.5rem;
+}
+
+button {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.clap {
+  display: flex;
+}
+
+@media (max-width: 600px) {
+  nav > a {
+    display: none;
+  }
 }

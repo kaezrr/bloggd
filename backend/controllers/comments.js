@@ -17,6 +17,7 @@ export async function getComments(req, res) {
   try {
     const comments = await db.comment.findMany({
       where: { postId: parseInt(postId), post: { published: true } },
+      orderBy: { createdAt: "desc" },
     });
     return res.json({
       message: "Comments fetched successfully",
@@ -33,6 +34,7 @@ export async function getCommentsAdmin(req, res) {
   try {
     const comments = await db.comment.findMany({
       where: { postId: parseInt(postId) },
+      orderBy: { createdAt: "desc" },
     });
     return res.json({
       message: "Comments fetched successfully",
