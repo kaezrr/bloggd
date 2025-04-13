@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkUser } from "../controllers/auth";
+import { checkUser } from "../controllers/auth.js";
 import {
   createPost,
   deletePost,
@@ -7,7 +7,7 @@ import {
   increaseLikes,
   updatePost,
   viewPost,
-} from "../controllers/posts";
+} from "../controllers/posts.js";
 
 const post = Router();
 

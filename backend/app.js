@@ -5,7 +5,8 @@ import "./controllers/passport.js";
 
 const app = express();
 
-app.use(urlencoded({ extended: false }));
+app.use(express.json());
+app.use(urlencoded({ extended: true }));
 
 app.use("/auth", routes.auth);
 app.use("/posts", routes.post);

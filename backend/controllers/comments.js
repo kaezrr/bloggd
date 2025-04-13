@@ -3,8 +3,13 @@ import db from "../prisma/prisma.js";
 export async function getComments(req, res) {
   const { postId } = req.params;
   try {
-    const comments = await db.comment.findMany({ where: { postId } });
-    return res.json(comments);
+    const comments = await db.comment.findMany({
+      where: { postId: parseInt(postId) },
+    });
+    return res.json({
+      message: "Comments fetched successfully",
+      data: comments,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: err.message });
@@ -16,7 +21,7 @@ export async function createComment(req, res) {
   const { email, comment } = req.body;
   try {
     const resource = await db.comment.create({
-      data: { author: email, text: comment, postId },
+      data: { author: email, text: comment, postId: parseInt(postId) },
     });
     return res.status(201).json({
       message: "Comment created successfully",
@@ -31,7 +36,7 @@ export async function createComment(req, res) {
 export async function deleteComment(req, res) {
   const { commentId } = req.params;
   try {
-    await db.comment.delete({ where: { id: commentId } });
+    await db.comment.delete({ where: { id: parseInt(commentId) } });
     return res.json({ message: "Comment deleted successfully" });
   } catch (err) {
     console.error(err);

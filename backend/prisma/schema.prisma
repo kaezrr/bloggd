@@ -19,7 +19,6 @@ model Post {
   text      String
   comments  Comment[]
   createdAt DateTime  @default(now())
-  published Boolean
   authorId  Int
   author    User      @relation(fields: [authorId], references: [id])
   likes     Int       @default(0)

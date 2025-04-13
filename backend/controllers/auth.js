@@ -61,7 +61,8 @@ export async function signUp(req, res) {
 }
 
 export function whoAmI(req, res) {
-  return res.json(req.user);
+  const { id, name, email } = req.user;
+  return res.json({ id, name, email });
 }
 
 export const checkUser = passport.authenticate("jwt", { session: false });

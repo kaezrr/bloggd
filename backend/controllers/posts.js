@@ -16,7 +16,9 @@ export async function getPosts(req, res) {
 export async function viewPost(req, res) {
   const { postId } = req.params;
   try {
-    const post = await db.post.findUnique({ where: { id: postId } });
+    const post = await db.post.findUnique({
+      where: { id: parseInt(postId) },
+    });
     if (!post) {
       return res.status(404).json({
         message: "Post doesn't exist",
@@ -34,9 +36,11 @@ export async function viewPost(req, res) {
 }
 
 export async function createPost(req, res) {
-  const { title, text, published } = req.body;
+  const { title, text } = req.body;
   try {
-    const post = await db.post.create({ data: { title, text, published } });
+    const post = await db.post.create({
+      data: { title, text, authorId: req.user.id },
+    });
     res.status(201).json({
       message: "Post created successfully",
       data: post,
@@ -49,11 +53,11 @@ export async function createPost(req, res) {
 
 export async function updatePost(req, res) {
   const { postId } = req.params;
-  const { title, text, published } = req.body;
+  const { title, text } = req.body;
   try {
     const post = await db.post.update({
-      where: { id: postId },
-      data: { title, text, published },
+      where: { id: parseInt(postId) },
+      data: { title, text },
     });
     res.json({
       message: "Post updated successfully",
@@ -68,7 +72,7 @@ export async function updatePost(req, res) {
 export async function deletePost(req, res) {
   const { postId } = req.params;
   try {
-    await db.post.delete({ where: { id: postId } });
+    await db.post.delete({ where: { id: parseInt(postId) } });
     res.json({ message: "Post deleted successfully" });
   } catch (err) {
     console.error(err);
@@ -80,7 +84,7 @@ export async function increaseLikes(req, res) {
   const { postId } = req.params;
   try {
     const post = await db.post.update({
-      where: { id: postId },
+      where: { id: parseInt(postId) },
       data: { likes: { increment: 1 } },
     });
     res.json({
