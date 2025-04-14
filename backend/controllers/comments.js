@@ -49,17 +49,21 @@ export async function getCommentsAdmin(req, res) {
 export const createComment = [
   validateComment,
   async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(403).json(errors.array());
+    }
     const { postId } = req.params;
-    const { email, comment } = req.body;
+    const { author, comment } = req.body;
     try {
-      const post = await db.post.findFirst({
+      const post = await db.post.findUnique({
         where: { id: parseInt(postId), published: true },
       });
       if (!post) {
         throw new Error("Post not found");
       }
       const resource = await db.comment.create({
-        data: { author: email, text: comment, postId: parseInt(postId) },
+        data: { author, text: comment, postId: parseInt(postId) },
       });
       return res.status(201).json({
         message: "Comment created successfully",
@@ -72,28 +76,35 @@ export const createComment = [
   },
 ];
 
-export async function createCommentAdmin(req, res) {
-  const { postId } = req.params;
-  const { author, comment } = req.body;
-  try {
-    const post = await db.post.findFirst({
-      where: { id: parseInt(postId) },
-    });
-    if (!post) {
-      throw new Error("Post not found");
+export const createCommentAdmin = [
+  validateComment,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(403).json(errors.array());
     }
-    const resource = await db.comment.create({
-      data: { author, text: comment, postId: parseInt(postId) },
-    });
-    return res.status(201).json({
-      message: "Comment created successfully",
-      data: resource,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: err.message });
-  }
-}
+    const { postId } = req.params;
+    const { author, comment } = req.body;
+    try {
+      const post = await db.post.findFirst({
+        where: { id: parseInt(postId) },
+      });
+      if (!post) {
+        throw new Error("Post not found");
+      }
+      const resource = await db.comment.create({
+        data: { author, text: comment, postId: parseInt(postId) },
+      });
+      return res.status(201).json({
+        message: "Comment created successfully",
+        data: resource,
+      });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: err.message });
+    }
+  },
+];
 
 export async function deleteComment(req, res) {
   const { commentId } = req.params;

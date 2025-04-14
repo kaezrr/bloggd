@@ -1,28 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Postbar } from "./components/Postbar";
-
-function Clap({ likes, setLikes }) {
-  return (
-    <div className="clap">
-      <h3>Clap or leave a comment!</h3>
-      <button onClick={setLikes}>
-        <img src="/clap.svg" alt="claps" />
-        {likes}
-      </button>
-    </div>
-  );
-}
+import { CommentList } from "./components/CommentList";
+import { Clap } from "./components/Clap";
+import { FormSummoner } from "./components/FormSummoner";
 
 function Post() {
   const { id } = useParams();
   const [post, setPost] = useState({});
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     fetch(`http://localhost:3000/posts/${id}`).then(async (response) => {
       setPost((await response.json()).data);
     });
-  }, [post]);
+  }, [refresh]);
 
   const increaseLikes = async () => {
     await fetch(`http://localhost:3000/posts/${id}/likes`, {
@@ -35,11 +27,20 @@ function Post() {
     }));
   };
 
+  const refreshComments = () => {
+    setRefresh((prev) => prev + 1);
+  };
+
   return (
     <main className="post-container">
       <Postbar title={post.title} />
       <p className="post-text">{post.text}</p>
-      <Clap likes={post.likes} setLikes={increaseLikes} />
+      <div className="btn-containers">
+        <Clap likes={post.likes} setLikes={increaseLikes} />
+        <h2>or</h2>
+        <FormSummoner postId={id} onSubmitSuccess={refreshComments} />
+      </div>
+      <CommentList postId={id} refresh={refresh} />
     </main>
   );
 }

@@ -116,8 +116,16 @@ nav > a {
 }
 
 h1,
+h2,
+h3,
 p {
   margin: 0;
+}
+
+.btn-containers {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .post-text {
@@ -125,7 +133,6 @@ p {
 }
 
 button {
-  margin-left: 1rem;
   display: flex;
   align-items: center;
 }
@@ -138,4 +145,57 @@ button {
   nav > a {
     display: none;
   }
+}
+
+.comment-holder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 2px solid white;
+  padding-top: 1rem;
+  gap: 1rem;
+}
+
+.comment-card {
+  display: grid;
+  width: min(100%, 600px);
+  grid-template-columns: 1fr 1fr;
+  justify-items: flex-start;
+  border: 1px solid white;
+  border-radius: 1em;
+  padding: 1em;
+}
+
+.comment-card > p:last-of-type {
+  grid-column: 1 / 3;
+}
+
+.comment-card > p:nth-of-type(1) {
+  justify-self: flex-end;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form > div {
+  display: flex;
+  gap: 1rem;
+}
+
+form input {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+dialog {
+  border: 1px solid white;
+}
+
+dialog::backdrop {
+  background-color: black;
+  opacity: 0.8;
 }
