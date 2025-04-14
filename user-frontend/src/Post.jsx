@@ -22,7 +22,7 @@ function Post() {
       headers: { "Content-Type": "application/json" },
     });
     setPost((prevPost) => ({
-      ...post,
+      ...prevPost,
       likes: prevPost.likes + 1,
     }));
   };
