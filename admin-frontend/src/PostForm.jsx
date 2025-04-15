@@ -4,6 +4,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Editbar } from "./components/Editbar";
 
 function PostForm() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(null);
@@ -12,7 +13,7 @@ function PostForm() {
   useEffect(() => {
     async function fetchData() {
       if (id) {
-        const response = await fetch(`http://localhost:3000/posts/all/${id}`, {
+        const response = await fetch(`${apiUrl}/posts/all/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -39,9 +40,7 @@ function PostForm() {
     const text = editorRef.current?.getContent();
     const published = publishRef.current?.checked;
 
-    const url = id
-      ? `http://localhost:3000/posts/${id}`
-      : "http://localhost:3000/posts";
+    const url = id ? `${apiUrl}/posts/${id}` : `${apiUrl}/posts`;
 
     const response = await fetch(url, {
       method: post ? "PUT" : "POST",

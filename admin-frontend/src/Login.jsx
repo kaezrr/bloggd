@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const logIn = async (e) => {
@@ -9,7 +10,7 @@ export default function Login() {
     const formData = new FormData(e.target);
     const sendData = Object.fromEntries(formData.entries());
 
-    const response = await fetch("http://localhost:3000/auth/login", {
+    const response = await fetch(`${apiUrl}/auth/login`, {
       method: "POST",
       body: JSON.stringify(sendData),
       headers: { "Content-Type": "application/json" },

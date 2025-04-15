@@ -5,11 +5,12 @@ import { CommentList } from "./components/CommentList";
 import Loading from "./components/Loading";
 
 function Post() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const [post, setPost] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:3000/posts/all/${id}`, {
+    fetch(`${apiUrl}/posts/all/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then(async (response) => {
       setPost((await response.json()).data);

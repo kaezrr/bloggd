@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import Loading from "./Loading";
 
 export function PostList() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   let [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/posts/all", {
+    fetch(`${apiUrl}/posts/all`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then(async (response) => {
       setPosts((await response.json()).data);
@@ -20,7 +21,7 @@ export function PostList() {
   const deletePost = (i) => async () => {
     if (!confirm("Are you sure you want to delete this item?")) return;
 
-    const response = await fetch(`http://localhost:3000/posts/${i}`, {
+    const response = await fetch(`${apiUrl}/posts/${i}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
@@ -32,7 +33,7 @@ export function PostList() {
 
   const setPublished = (i, status) => async () => {
     const response = await fetch(
-      `http://localhost:3000/posts/${i}/published?status=${status}`,
+      `${apiUrl}/posts/${i}/published?status=${status}`,
       {
         method: "PUT",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

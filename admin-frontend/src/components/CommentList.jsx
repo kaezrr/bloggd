@@ -3,9 +3,10 @@ import { formatDistanceToNow } from "date-fns";
 import Loading from "./Loading";
 
 export function CommentList({ postId }) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   let [comments, setComments] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:3000/posts/${postId}/comments/all`, {
+    fetch(`${apiUrl}/posts/${postId}/comments/all`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then(async (response) => {
       setComments((await response.json()).data);
@@ -15,13 +16,10 @@ export function CommentList({ postId }) {
   const deleteComment = (i) => async () => {
     if (!confirm("Are you sure you want to delete this item?")) return;
 
-    const response = await fetch(
-      `http://localhost:3000/posts/${postId}/comments/${i}`,
-      {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      },
-    );
+    const response = await fetch(`${apiUrl}/posts/${postId}/comments/${i}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
     if (response.ok) {
       const newComments = comments.filter((e) => e.id !== i);
       setComments(newComments);
