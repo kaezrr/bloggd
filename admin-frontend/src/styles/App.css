@@ -9,7 +9,7 @@
   min-height: 80vh;
   align-items: center;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 2rem 1rem;
   gap: 2rem;
   text-align: center;
 }
@@ -89,6 +89,7 @@ main {
 }
 
 .post-container {
+  width: 100%;
   align-items: center;
 }
 
@@ -125,7 +126,7 @@ p {
 }
 
 .post-text {
-  font-size: 1.5rem;
+  width: 100%;
 }
 
 button {
@@ -182,7 +183,7 @@ form > div {
   gap: 1rem;
 }
 
-form input {
+input {
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
 }
@@ -215,4 +216,14 @@ dialog::backdrop {
 
 .clickable:hover {
   transform: scale(1.2);
+}
+
+#root > input {
+  width: min(100%, 600px);
+}
+
+.publish {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

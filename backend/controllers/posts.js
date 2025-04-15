@@ -95,7 +95,12 @@ export const createPost = [
     }
     try {
       const post = await db.post.create({
-        data: { title, text, authorId: req.user.id, published },
+        data: {
+          title,
+          text,
+          authorId: req.user.id,
+          published: published === "true",
+        },
       });
       res.status(201).json({
         message: "Post created successfully",
@@ -120,7 +125,7 @@ export const updatePost = [
     try {
       const post = await db.post.update({
         where: { id: parseInt(postId) },
-        data: { title, text, published },
+        data: { title, text, published: published === "true" },
       });
       res.json({
         message: "Post updated successfully",

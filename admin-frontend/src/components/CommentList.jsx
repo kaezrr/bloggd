@@ -12,10 +12,6 @@ export function CommentList({ postId }) {
     });
   }, []);
 
-  if (comments.length === 0) {
-    return <Loading />;
-  }
-
   const deleteComment = (i) => async () => {
     if (!confirm("Are you sure you want to delete this item?")) return;
 
@@ -34,6 +30,7 @@ export function CommentList({ postId }) {
 
   return (
     <div className="comment-holder">
+      {comments.length === 0 && <h2>There aren't any comments here yet...</h2>}
       {comments.map((e) => (
         <div className="comment-card" key={e.id}>
           <h3>{e.author}</h3>

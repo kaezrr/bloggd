@@ -23,7 +23,10 @@ function Post() {
   return (
     <main className="post-container">
       <Postbar title={post.title} id={id} />
-      <p className="post-text">{post.text}</p>
+      <div
+        className="post-text"
+        dangerouslySetInnerHTML={{ __html: post.text }}
+      ></div>
       <CommentList postId={id} />
     </main>
   );
