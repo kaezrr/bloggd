@@ -68,7 +68,8 @@ span {
   border-radius: 1em;
   padding: 1em;
   gap: 1em;
-  place-items: center;
+  align-items: center;
+  justify-items: flex-start;
 }
 
 .post-card * {
@@ -206,4 +207,18 @@ dialog::backdrop {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.post-card > span {
+  display: flex;
+  gap: 1rem;
+}
+
+.clickable {
+  transition: transform 0.1s ease-out;
+  cursor: pointer;
+}
+
+.clickable:hover {
+  transform: scale(1.2);
 }

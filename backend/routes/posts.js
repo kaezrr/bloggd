@@ -6,6 +6,7 @@ import {
   getPosts,
   getPostsAdmin,
   increaseLikes,
+  setPublished,
   updatePost,
   viewPost,
   viewPostAdmin,
@@ -22,6 +23,7 @@ post.put("/:postId/likes", increaseLikes);
 
 post.post("/", checkUser, createPost);
 post.put("/:postId", checkUser, updatePost);
+post.put("/:postId/published", checkUser, setPublished);
 post.delete("/:postId", checkUser, deletePost);
 
 export default post;

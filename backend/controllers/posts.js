@@ -160,3 +160,22 @@ export async function increaseLikes(req, res) {
     res.status(500).json({ message: err.message });
   }
 }
+
+export async function setPublished(req, res) {
+  const { postId } = req.params;
+  const status = req.query.status === "true";
+
+  try {
+    const post = await db.post.update({
+      where: { id: parseInt(postId) },
+      data: { published: status },
+    });
+    res.json({
+      message: "Post published status updated successfully",
+      data: post,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+}
