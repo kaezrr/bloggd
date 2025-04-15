@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 export function PostList() {
   let [posts, setPosts] = useState([]);
@@ -11,6 +12,10 @@ export function PostList() {
       setPosts((await response.json()).data);
     });
   }, []);
+
+  if (posts.length === 0) {
+    return <Loading />;
+  }
 
   const deletePost = (i) => async () => {
     if (!confirm("Are you sure you want to delete this item?")) return;

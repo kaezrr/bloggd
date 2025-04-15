@@ -7,6 +7,9 @@ export function Navbar() {
 
   return (
     <nav>
+      <Link to="/create">
+        <h1>Create</h1>
+      </Link>
       <span>
         <h1>Manage posts on&nbsp;</h1>
         <Link to="/">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Postbar } from "./components/Postbar";
 import { CommentList } from "./components/CommentList";
+import Loading from "./components/Loading";
 
 function Post() {
   const { id } = useParams();
@@ -15,9 +16,13 @@ function Post() {
     });
   }, []);
 
+  if (Object.keys(post).length === 0) {
+    return <Loading />;
+  }
+
   return (
     <main className="post-container">
-      <Postbar title={post.title} />
+      <Postbar title={post.title} id={id} />
       <p className="post-text">{post.text}</p>
       <CommentList postId={id} />
     </main>

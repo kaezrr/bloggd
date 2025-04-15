@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import Post from "./Post.jsx";
 import Login from "./Login.jsx";
 import Protected from "./Protected.jsx";
+import PostForm from "./PostForm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,22 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/edit/:id",
+    element: (
+      <Protected>
+        <PostForm />
+      </Protected>
+    ),
+  },
+  {
+    path: "/create",
+    element: (
+      <Protected>
+        <PostForm />
+      </Protected>
+    ),
   },
 ]);
 

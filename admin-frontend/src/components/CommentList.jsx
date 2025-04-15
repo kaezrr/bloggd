@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import Loading from "./Loading";
 
 export function CommentList({ postId }) {
   let [comments, setComments] = useState([]);
@@ -10,6 +11,10 @@ export function CommentList({ postId }) {
       setComments((await response.json()).data);
     });
   }, []);
+
+  if (comments.length === 0) {
+    return <Loading />;
+  }
 
   const deleteComment = (i) => async () => {
     if (!confirm("Are you sure you want to delete this item?")) return;
