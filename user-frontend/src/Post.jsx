@@ -34,7 +34,10 @@ function Post() {
   return (
     <main className="post-container">
       <Postbar title={post.title} />
-      <p className="post-text">{post.text}</p>
+      <div
+        className="post-text"
+        dangerouslySetInnerHTML={{ __html: post.text }}
+      ></div>
       <div className="btn-containers">
         <Clap likes={post.likes} setLikes={increaseLikes} />
         <h2>or</h2>

@@ -12,6 +12,7 @@ export function CommentList({ postId, refresh }) {
   }, [refresh]);
   return (
     <div className="comment-holder">
+      {comments.length === 0 && <h2>There are no comments here...</h2>}
       {comments.map((e) => (
         <div className="comment-card" key={e.id}>
           <h3>{e.author}</h3>

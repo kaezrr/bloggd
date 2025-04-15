@@ -87,6 +87,7 @@ main {
 }
 
 .post-container {
+  width: 100%;
   align-items: center;
 }
 
@@ -129,7 +130,7 @@ p {
 }
 
 .post-text {
-  font-size: 1.5rem;
+  width: 100%;
 }
 
 button {
