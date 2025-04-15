@@ -5,7 +5,7 @@ export function CommentList({ postId, refresh }) {
   const apiUrl = import.meta.env.VITE_API_URL;
   let [comments, setComments] = useState([]);
   useEffect(() => {
-    fetch(`${apiUrl}/${postId}/comments`).then(async (response) => {
+    fetch(`${apiUrl}/posts/${postId}/comments`).then(async (response) => {
       setComments((await response.json()).data);
     });
   }, [refresh]);

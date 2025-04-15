@@ -16,7 +16,7 @@ export function FormSummoner({ postId, onSubmitSuccess }) {
   const submitAndRefresh = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    await fetch(`${apiUrl}/${postId}/comments`, {
+    await fetch(`${apiUrl}/posts/${postId}/comments`, {
       method: "POST",
       body: JSON.stringify(Object.fromEntries(formData.entries())),
       headers: { "Content-Type": "application/json" },
