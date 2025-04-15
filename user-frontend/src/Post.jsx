@@ -6,18 +6,19 @@ import { Clap } from "./components/Clap";
 import { FormSummoner } from "./components/FormSummoner";
 
 function Post() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/posts/${id}`).then(async (response) => {
+    fetch(`${apiUrl}/posts/${id}`).then(async (response) => {
       setPost((await response.json()).data);
     });
   }, [refresh]);
 
   const increaseLikes = async () => {
-    await fetch(`http://localhost:3000/posts/${id}/likes`, {
+    await fetch(`${apiUrl}/posts/${id}/likes`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
     });

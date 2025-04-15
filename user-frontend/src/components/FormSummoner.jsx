@@ -1,6 +1,7 @@
 import { useRef } from "react";
 
 export function FormSummoner({ postId, onSubmitSuccess }) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const dialogRef = useRef(null);
 
   const showDialog = () => {
@@ -15,7 +16,7 @@ export function FormSummoner({ postId, onSubmitSuccess }) {
   const submitAndRefresh = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+    await fetch(`${apiUrl}/${postId}/comments`, {
       method: "POST",
       body: JSON.stringify(Object.fromEntries(formData.entries())),
       headers: { "Content-Type": "application/json" },

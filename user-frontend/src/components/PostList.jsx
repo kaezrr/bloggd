@@ -3,9 +3,10 @@ import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
 
 export function PostList() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   let [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/posts").then(async (response) => {
+    fetch(`${apiUrl}/posts`).then(async (response) => {
       setPosts((await response.json()).data);
     });
   }, []);

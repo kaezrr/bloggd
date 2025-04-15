@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 
 export function CommentList({ postId, refresh }) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   let [comments, setComments] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:3000/posts/${postId}/comments`).then(
-      async (response) => {
-        setComments((await response.json()).data);
-      },
-    );
+    fetch(`${apiUrl}/${postId}/comments`).then(async (response) => {
+      setComments((await response.json()).data);
+    });
   }, [refresh]);
   return (
     <div className="comment-holder">
